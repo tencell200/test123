@@ -1,21 +1,40 @@
--- Roblox Script for Whitelist Verification
+-- Roblox HWID Logger + Key System
+local webhookURL = "https://discord.com/api/webhooks/YOUR_WEBHOOK_HERE"
 
-local key = getgenv().key  -- Retrieve the key set in the execution script
-local valid_keys = {   -- Example: Store allowed keys (or fetch from a server)
-    ["g8amwV4F8TRPivk220j1YNgPc4ihNwjo"] = true, 
-    ["AnotherExampleKey"] = true
-}
-
--- Function to check if the key is valid
-local function checkWhitelist()
-    if valid_keys[key] then
-        print("Key is valid! Access granted.")
-        -- Put your actual script logic here
-    else
-        print("Invalid key! Access denied.")
-        game.Players.LocalPlayer:Kick("Invalid whitelist key! Get a valid key from the bot.")
-    end
+-- Function to check exploit compatibility
+local http_request = (http and http.request) or (syn and syn.request) or (request)
+if not http_request then
+    print("Your executor does not support HTTP requests!")
+    return
 end
 
--- Run the whitelist check
-checkWhitelist()
+-- Get Player Info
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+local HWID = game:GetService("RbxAnalyticsService"):GetClientId()
+local Key = getgenv().key or "No Key Provided"
+
+-- Construct Webhook Payload
+local data = {
+    ["content"] = "**New Execution Detected!**",
+    ["embeds"] = {{
+        ["title"] = "User Executed the Script!",
+        ["color"] = 16711680, -- Red
+        ["fields"] = {
+            { ["name"] = "**Username**", ["value"] = LocalPlayer.Name, ["inline"] = true },
+            { ["name"] = "**User ID**", ["value"] = LocalPlayer.UserId, ["inline"] = true },
+            { ["name"] = "**HWID**", ["value"] = HWID, ["inline"] = false },
+            { ["name"] = "**Key Used**", ["value"] = Key, ["inline"] = false }
+        }
+    }}
+}
+
+-- Send Data to Webhook
+http_request({
+    Url = webhookURL,
+    Method = "POST",
+    Headers = {["Content-Type"] = "application/json"},
+    Body = game:GetService("HttpService"):JSONEncode(data)
+})
+
+print("HWID and Key sent to Discord Webhook!")
