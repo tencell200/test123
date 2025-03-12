@@ -1,5 +1,5 @@
 -- Roblox HWID Logger + Key System
-local webhookURL = "https://discord.com/api/webhooks/YOUR_WEBHOOK_HERE"
+local webhookURL = "https://discord.com/api/webhooks/1343259708676505610/mBWdtkhsmwKQV7W6fmeeWo4SSkRYBbBZXDfAGOP2XhOgbMYD36ElrWEgB7Ompj7Pd5qp"
 
 -- Function to check exploit compatibility
 local http_request = (http and http.request) or (syn and syn.request) or (request)
