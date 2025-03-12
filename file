@@ -1,0 +1,21 @@
+-- Roblox Script for Whitelist Verification
+
+local key = getgenv().key  -- Retrieve the key set in the execution script
+local valid_keys = {   -- Example: Store allowed keys (or fetch from a server)
+    ["Dpmy7WgnPPPLBdmk"] = true, 
+    ["AnotherExampleKey"] = true
+}
+
+-- Function to check if the key is valid
+local function checkWhitelist()
+    if valid_keys[key] then
+        print("Key is valid! Access granted.")
+        -- Put your actual script logic here
+    else
+        print("Invalid key! Access denied.")
+        game.Players.LocalPlayer:Kick("Invalid whitelist key! Get a valid key from the bot.")
+    end
+end
+
+-- Run the whitelist check
+checkWhitelist()
