@@ -2,7 +2,7 @@
 
 local key = getgenv().key  -- Retrieve the key set in the execution script
 local valid_keys = {   -- Example: Store allowed keys (or fetch from a server)
-    ["Dpmy7WgnPPPLBdmk"] = true, 
+    ["g8amwV4F8TRPivk220j1YNgPc4ihNwjo"] = true, 
     ["AnotherExampleKey"] = true
 }
 
